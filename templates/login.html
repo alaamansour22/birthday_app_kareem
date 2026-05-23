@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة خاصة جداً 💫</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page-body">
+    
+    <div class="hearts-bg" id="heartsContainer"></div>
+    
+    <div class="main-container-login">
+        
+        <div class="hero-section fade-in">
+            <div class="cake-container">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="cake-layer layer-top"></div>
+                <div class="cake-layer layer-middle"></div>
+                <div class="cake-layer layer-bottom"></div>
+            </div>
+        </div>
+
+        <div class="login-card fade-in">
+            <div class="avatar-glow">👑</div>
+            <h2>مرحباً بكِ يا أميرتي 🩷</h2>
+            <p>هناك مفاجأة تصنع بحب في انتظارك، أدخلي كلمتك السرية الخاصة للدخول:</p>
+            
+            <form method="POST">
+                <input type="password" name="password" placeholder="اكتبِ كلمتك السرية هنا..." required autocomplete="off">
+                <button type="submit">افتحي الهدية ✨</button>
+            </form>
+            
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            <p class="app-note small"> 🩷 هابي بيرث داي يا بوبا 🩷</p>
+        </div>
+    </div>
+
+    <script>
+        // تأثير قلوب تتطاير في الخلفية
+        const container = document.getElementById('heartsContainer');
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            // مصفوفة من العناصر العائمة
+            heart.innerText = ['🩷', '❤️', '✨', '🎂', '🍰', '🎉'][Math.floor(Math.random() * 6)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            container.appendChild(heart);
+        }
+    </script>
+</body>
+</html>

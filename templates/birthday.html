@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كل سنة وأنتي طيبة يا روح قلبي 🩷</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+</head>
+<body class="birthday-page">
+    
+    <audio id="birthdaySong" autoplay loop>
+        <source src="{{ url_for('static', filename='song.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <ul class="background-cakes">
+        <li>🎂</li><li>🍰</li><li>🎈</li><li>🎂</li><li>✨</li><li>🍰</li><li>🎉</li><li>🎂</li><li>🦋</li><li>🩷</li>
+    </ul>
+
+    <div class="main-container-birthday">
+        
+        <header class="hero-section fade-in">
+            <div class="date-badge">٢٧ / ٥ / ٢٠٠٢</div>
+            <h1 class="main-title">كل عام وأنتي بخير يا <span class="highlight">بوبا</span> 🩷</h1>
+            
+            <div class="cake-container">
+                <div class="candle"><div class="flame"></div></div>
+                <div class="cake-layer layer-top"></div>
+                <div class="cake-layer layer-middle"></div>
+                <div class="cake-layer layer-bottom"></div>
+            </div>
+            <p class="scroll-hint">انزلي لتحت عشان تشوفي المفاجأة 👇</p>
+        </header>
+
+        <section class="message-box first-msg slide-up">
+            <div class="box-icon">🦋</div>
+            <p class="romantic-text">
+                كل يوم بيعدي معاكي بيبقى أحلى من اللي قبله كل عيد ميلاد وأنا جنبك... النهارده يوم مميز لأنه يوم ميلاد أغلى إنسانة في حياتي يوم ما ربنا أنعم عليا بوجودك في الدنيا دي انتي مش بس حبيبي ، انتي الفرحة اللي بشوفها انتي الأمان اللي بحس بيه انتي السبب اللي بيخليني أحب الحياة وأعيشها بجد النهارده في عيد ميلادك عايز أقولك حاجة ... مش بس بحبك لا ... أنا بموت فيكي إنتي القمر اللي بينور سمايا ، انتي الحلم اللي بحلم بيه كل يوم ، انتي كل حاجة حلوة في حياتي ، يارب كل سنة وأنا جنبك ... وكل أعياد ميلادك الجاية نعيشها مع بعض ي روح قلبي 🩷🌍🦋
+            </p>
+        </section>
+
+        <section class="message-box counter-section slide-up delay-1">
+            <div class="box-icon">⏳</div>
+            <h2 class="section-title">مع بعض من يوم ٥ / ١٢ / ٢٠٢٥</h2>
+            <div class="counter-container">
+                <div class="time-box"><span id="days">0</span><p>يوم</p></div>
+                <div class="time-box"><span id="hours">0</span><p>ساعة</p></div>
+                <div class="time-box"><span id="minutes">0</span><p>دقيقة</p></div>
+                <div class="time-box"><span id="seconds">0</span><p>ثانية</p></div>
+            </div>
+            <p class="counter-footer">وكل ثانية بتعدي بحبك أكتر 🩷</p>
+        </section>
+
+        <section class="gallery-section slide-up delay-2">
+            <h2 class="section-title">ذكرياتنا وأجمل أيامنا سـوا 📸</h2>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (1).jpeg') }}" alt="1"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (2).jpeg') }}" alt="2"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (3).jpeg') }}" alt="3"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (4).jpeg') }}" alt="4"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (5).jpeg') }}" alt="5"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (6).jpeg') }}" alt="6"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (7).jpeg') }}" alt="7"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (8).jpeg') }}" alt="8"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (9).jpeg') }}" alt="9"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='1 (10).jpeg') }}" alt="10"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <section class="message-box second-msg slide-up delay-2">
+            <div class="box-icon">♥️</div>
+            <div class="final-letter">
+                <p class="highlight-large">كل سنه وانتي طيبه ي روح قلبي</p>
+                <p>مهما هقولك بحبك ازاي مش هوفيكي بحقك...</p>
+                <p class="accent-text">أحلي حد يكبر سنه كده كده 😍</p>
+                <h3 class="super-bold">بحبككككككككك ♥️</h3>
+                <p class="footer-note">يارب دايماً نفضل سوا . ربنا يخليكي ليا ي حبيبي 🩷🌍</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('birthdaySong').play().catch(e => console.log("Audio play prevented by browser, requires user interaction first."));
+        });
+
+        // --- كود العداد الزمني ---
+        const startDate = new Date("2025-12-05T00:00:00").getTime();
+        
+        function updateCounter() {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+                document.getElementById("seconds").innerText = seconds;
+            }
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // --- إعدادات ألبوم الصور (Cards Effect) ---
+        var swiper = new Swiper(".mySwiper", {
+            effect: "cards",
+            grabCursor: true,
+            autoplay: {
+                delay: 2500, 
+                disableOnInteraction: false,
+            },
+            pagination: { 
+                el: ".swiper-pagination", 
+                dynamicBullets: true 
+            },
+        });
+
+        // تأثير الظهور عند النزول (Scroll Animation)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.slide-up').forEach((el) => observer.observe(el));
+
+        // الكونفيتي (الألعاب النارية)
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const confettis = [];
+        const colors = ['#ff758c', '#ff7eb3', '#ffd700', '#6be5ff', '#b5f7a1'];
+        for (let i = 0; i < 150; i++) {
+            confettis.push({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4, d: Math.random() * canvas.height,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.07 + 0.02, tiltAngle: 0
+            });
+        }
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettis.forEach((p, idx) => {
+                p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+                if (p.y > canvas.height) confettis[idx] = { ...p, x: Math.random() * canvas.width, y: -20, tiltAngle: 0 };
+                ctx.beginPath(); ctx.lineWidth = p.r; ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y); ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); ctx.stroke();
+            });
+            requestAnimationFrame(drawConfetti);
+        }
+        drawConfetti();
+    </script>
+</body>
+</html>
