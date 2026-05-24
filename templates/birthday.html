@@ -83,23 +83,23 @@
             <h2 class="section-title">ذكرياتنا وأجمل أيامنا سـوا 📸</h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img1.jpeg') }}" alt="1"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img2.jpeg') }}" alt="2"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img3.jpeg') }}" alt="3"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img4.jpeg') }}" alt="4"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img5.jpeg') }}" alt="5"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img6.jpeg') }}" alt="6"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img7.jpeg') }}" alt="7"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img8.jpeg') }}" alt="8"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img9.jpeg') }}" alt="9"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img10.jpeg') }}" alt="10"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img11.jpeg') }}" alt="11"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img12.jpeg') }}" alt="12"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img13.jpeg') }}" alt="13"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img14.jpeg') }}" alt="14"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img15.jpeg') }}" alt="15"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img16.jpeg') }}" alt="16"></div>
-                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img17.jpeg') }}" alt="17"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img1.jpeg') }}" alt="1" loading="eager" decoding="async" fetchpriority="high"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img2.jpeg') }}" alt="2" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img3.jpeg') }}" alt="3" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img4.jpeg') }}" alt="4" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img5.jpeg') }}" alt="5" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img6.jpeg') }}" alt="6" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img7.jpeg') }}" alt="7" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img8.jpeg') }}" alt="8" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img9.jpeg') }}" alt="9" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img10.jpeg') }}" alt="10" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img11.jpeg') }}" alt="11" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img12.jpeg') }}" alt="12" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img13.jpeg') }}" alt="13" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img14.jpeg') }}" alt="14" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img15.jpeg') }}" alt="15" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img16.jpeg') }}" alt="16" loading="lazy" decoding="async"></div>
+                    <div class="swiper-slide"><img src="{{ url_for('static', filename='img17.jpeg') }}" alt="17" loading="lazy" decoding="async"></div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -216,24 +216,34 @@
         const starCanvas = document.getElementById('starCanvas');
         const starCtx = starCanvas.getContext('2d');
         
-        let starW, starH;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let starW, starH, starAnimationId, confettiAnimationId, resizeTimer;
         let starsArray = [];
         let textTargets = [];
         let isFormingText = false;
+        let isStarSkyVisible = false;
+
+        function getCanvasScale() {
+            return Math.min(window.devicePixelRatio || 1, 1.5);
+        }
         
         function initStars() {
             const container = starCanvas.parentElement;
-            // استخدام clientWidth و clientHeight المباشر لضمان دقة المقاس
-            starW = starCanvas.width = container.clientWidth;
-            starH = starCanvas.height = container.clientHeight;
+            const scale = getCanvasScale();
+            starW = Math.max(1, Math.floor(container.clientWidth));
+            starH = Math.max(1, Math.floor(container.clientHeight));
+            starCanvas.width = Math.floor(starW * scale);
+            starCanvas.height = Math.floor(starH * scale);
+            starCtx.setTransform(scale, 0, 0, scale, 0, 0);
             
             starsArray = [];
-            for(let i = 0; i < 3000; i++) {
+            const starCount = Math.min(1500, Math.max(550, Math.floor((starW * starH) / 85)));
+            for(let i = 0; i < starCount; i++) {
                 starsArray.push({
                     x: Math.random() * starW,
                     y: Math.random() * starH,
-                    vx: (Math.random() - 0.5) * 1.2,
-                    vy: (Math.random() - 0.5) * 1.2,
+                    vx: (Math.random() - 0.5) * 0.9,
+                    vy: (Math.random() - 0.5) * 0.9,
                     radius: Math.random() * 1.2 + 0.5,
                     color: Math.random() > 0.85 ? '#ff7eb3' : '#ffffff'
                 });
@@ -278,6 +288,11 @@
 }
 
         function animateStarsSky() {
+            if (!isStarSkyVisible || prefersReducedMotion) {
+                starAnimationId = null;
+                return;
+            }
+
             starCtx.clearRect(0, 0, starW, starH);
             
             starsArray.forEach((star, i) => {
@@ -299,7 +314,21 @@
                 starCtx.fill();
             });
             
-            requestAnimationFrame(animateStarsSky);
+            starAnimationId = requestAnimationFrame(animateStarsSky);
+        }
+
+        function startStarSky() {
+            if (!starsArray.length) initStars();
+            if (!starAnimationId && !prefersReducedMotion) {
+                starAnimationId = requestAnimationFrame(animateStarsSky);
+            }
+        }
+
+        function stopStarSky() {
+            if (starAnimationId) {
+                cancelAnimationFrame(starAnimationId);
+                starAnimationId = null;
+            }
         }
         
         starCanvas.addEventListener('click', () => {
@@ -316,24 +345,47 @@
             }
         });
         
-        setTimeout(() => {
-            initStars();
-            animateStarsSky();
-        }, 500);
+        const starObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                isStarSkyVisible = entry.isIntersecting;
+                if (entry.isIntersecting) {
+                    startStarSky();
+                } else {
+                    stopStarSky();
+                }
+            });
+        }, { threshold: 0.15 });
+        starObserver.observe(document.querySelector('.night-sky-section'));
 
         window.addEventListener('resize', () => {
-            if(starCanvas.parentElement.clientWidth > 0) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if(starCanvas.parentElement.clientWidth > 0) {
                 initStars();
                 if(isFormingText) { textTargets = getTextParticles(); }
-            }
+                }
+            }, 160);
         });
 
         // --- إعدادات ألبوم الصور ---
         var swiper = new Swiper(".mySwiper", {
             effect: "cards", grabCursor: true,
+            preloadImages: false,
+            watchSlidesProgress: true,
             autoplay: { delay: 2500, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", dynamicBullets: true },
         });
+
+        const galleryObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    swiper.autoplay.start();
+                } else {
+                    swiper.autoplay.stop();
+                }
+            });
+        }, { threshold: 0.25 });
+        galleryObserver.observe(document.getElementById('gallerySection'));
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -343,32 +395,61 @@
         // --- الكونفيتي العادي ---
         const bdayCanvas = document.getElementById('confettiCanvas');
         const bdayCtx = bdayCanvas.getContext('2d');
-        function resizeBdayCanvas() { bdayCanvas.width = window.innerWidth; bdayCanvas.height = window.innerHeight; }
+        function resizeBdayCanvas() {
+            const scale = getCanvasScale();
+            bdayCanvas.width = Math.floor(window.innerWidth * scale);
+            bdayCanvas.height = Math.floor(window.innerHeight * scale);
+            bdayCtx.setTransform(scale, 0, 0, scale, 0, 0);
+        }
         window.addEventListener('resize', resizeBdayCanvas);
         resizeBdayCanvas();
 
         const confettis = [];
         const colors = ['#ff758c', '#ff7eb3', '#ffd700', '#6be5ff', '#b5f7a1'];
-        for (let i = 0; i < 150; i++) {
+        const confettiCount = prefersReducedMotion ? 0 : Math.min(100, Math.max(45, Math.floor(window.innerWidth / 8)));
+        for (let i = 0; i < confettiCount; i++) {
             confettis.push({
-                x: Math.random() * bdayCanvas.width, y: Math.random() * bdayCanvas.height - bdayCanvas.height,
-                r: Math.random() * 6 + 4, d: Math.random() * bdayCanvas.height,
+                x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight - window.innerHeight,
+                r: Math.random() * 6 + 4, d: Math.random() * window.innerHeight,
                 color: colors[Math.floor(Math.random() * colors.length)],
                 tilt: Math.random() * 10 - 5, tiltAngleIncremental: Math.random() * 0.07 + 0.02, tiltAngle: 0
             });
         }
         function drawBdayConfetti() {
-            bdayCtx.clearRect(0, 0, bdayCanvas.width, bdayCanvas.height);
+            if (document.hidden || prefersReducedMotion) {
+                confettiAnimationId = null;
+                return;
+            }
+
+            bdayCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
             confettis.forEach((p, idx) => {
                 p.tiltAngle += p.tiltAngleIncremental; p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
                 p.x += Math.sin(p.tiltAngle); p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
-                if (p.y > bdayCanvas.height) confettis[idx] = { ...p, x: Math.random() * bdayCanvas.width, y: -20, tiltAngle: 0 };
+                if (p.y > window.innerHeight) confettis[idx] = { ...p, x: Math.random() * window.innerWidth, y: -20, tiltAngle: 0 };
                 bdayCtx.beginPath(); bdayCtx.lineWidth = p.r; bdayCtx.strokeStyle = p.color;
                 bdayCtx.moveTo(p.x + p.tilt + p.r / 2, p.y); bdayCtx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2); bdayCtx.stroke();
             });
-            requestAnimationFrame(drawBdayConfetti);
+            confettiAnimationId = requestAnimationFrame(drawBdayConfetti);
         }
-        drawBdayConfetti();
+
+        function startConfetti() {
+            if (!confettiAnimationId && !prefersReducedMotion) {
+                confettiAnimationId = requestAnimationFrame(drawBdayConfetti);
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (confettiAnimationId) cancelAnimationFrame(confettiAnimationId);
+                confettiAnimationId = null;
+                stopStarSky();
+            } else {
+                startConfetti();
+                if (isStarSkyVisible) startStarSky();
+            }
+        });
+
+        startConfetti();
     </script>
 </body>
 </html>

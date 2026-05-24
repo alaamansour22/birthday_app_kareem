@@ -223,6 +223,7 @@ html, body {
 /* صناديق الرسائل */
 .message-box {
     background: var(--card-bg); border-radius: 24px; padding: 40px 25px 30px; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15); position: relative; border: 1px solid rgba(255, 255, 255, 0.6); text-align: center; width: 100%;
+    overflow: visible;
 }
 
 .box-icon {
@@ -329,23 +330,53 @@ html, body {
     box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
     border: 1px solid rgba(255,255,255,0.1);
     margin: 0 auto;
+    contain: layout paint size;
 }
 
 #starCanvas {
     width: 100%;
     height: 100%;
     display: block;
+    transform: translateZ(0);
 }
 
 /* =========================================
    ألبوم الصور (Cards Effect)
    ========================================= */
-.gallery-section { text-align: center; width: 100%; scroll-margin-top: 50px; }
+.gallery-section {
+    text-align: center;
+    width: 100%;
+    scroll-margin-top: 50px;
+    padding-bottom: 25px;
+}
 .gallery-section .section-title { font-size: 22px; color: #4a1525; margin-bottom: 25px; font-weight: 700; }
 
-.swiper { width: 100%; max-width: 320px; height: 420px; padding: 20px 0 40px; }
-.swiper-slide { border-radius: 18px; border: 8px solid #fff; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); background: #fff; overflow: hidden; }
-.swiper-slide img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; border-radius: 10px; background-color: #fff; }
+.swiper {
+    width: 100%;
+    max-width: 320px;
+    height: 480px;
+    padding: 20px 0 80px !important;
+    overflow: visible !important;
+}
+.swiper-wrapper { overflow: visible; }
+.swiper-slide {
+    border-radius: 18px;
+    border: 8px solid #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    overflow: hidden;
+    contain: layout paint;
+}
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 10px;
+    background-color: #fff;
+}
 .swiper-pagination-bullet-active { background: var(--primary-dark) !important; }
 
 /* تفاصيل الرسالة الأخيرة */
@@ -374,7 +405,7 @@ html, body {
    ========================================= */
 @media (max-width: 360px) {
     .main-title { font-size: 24px; }
-    .swiper { max-width: 260px; height: 350px; }
+    .swiper { max-width: 260px; height: 410px; padding-bottom: 80px !important; }
     .time-box { padding: 10px 5px; min-width: 60px; }
     .time-box span { font-size: 20px; }
     .super-bold { font-size: 26px; }
@@ -385,9 +416,20 @@ html, body {
     .message-box { padding: 50px 40px 40px; }
     .romantic-text { font-size: 18px; }
     .main-title { font-size: 36px; }
-    .swiper { max-width: 400px; height: 500px; }
+    .swiper { max-width: 400px; height: 575px; padding-bottom: 90px !important; }
     .time-box { padding: 20px; min-width: 90px; }
     .time-box span { font-size: 32px; }
     .super-bold { font-size: 48px; }
     .canvas-container { height: 450px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
