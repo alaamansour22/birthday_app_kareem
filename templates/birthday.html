@@ -223,52 +223,59 @@
         
         function initStars() {
             const container = starCanvas.parentElement;
+            // استخدام clientWidth و clientHeight المباشر لضمان دقة المقاس
             starW = starCanvas.width = container.clientWidth;
             starH = starCanvas.height = container.clientHeight;
             
             starsArray = [];
-            // 3000 نجمة لكثافة وضوح أعلى
             for(let i = 0; i < 3000; i++) {
                 starsArray.push({
                     x: Math.random() * starW,
                     y: Math.random() * starH,
                     vx: (Math.random() - 0.5) * 1.2,
                     vy: (Math.random() - 0.5) * 1.2,
-                    radius: Math.random() * 1.5 + 0.8,
+                    radius: Math.random() * 1.2 + 0.5,
                     color: Math.random() > 0.85 ? '#ff7eb3' : '#ffffff'
                 });
             }
         }
         
         function getTextParticles() {
-            const offCanvas = document.createElement('canvas');
-            const offCtx = offCanvas.getContext('2d');
-            offCanvas.width = starW;
-            offCanvas.height = starH;
-            
-            offCtx.fillStyle = "white";
-            let fontSize = Math.min(starW / 2.5, 140); 
-            offCtx.font = `900 ${fontSize}px Cairo`;
-            offCtx.textAlign = "center";
-            offCtx.textBaseline = "middle";
-            
-            // رسم الاسم على اليمين والقلب على اليسار بمسافة أكبر
-            offCtx.fillText("رباب", starW / 2 + (fontSize * 0.4), starH / 2);
-            offCtx.fillText("🩷", starW / 2 - (fontSize * 1.3), starH / 2);
-            
-            const data = offCtx.getImageData(0, 0, starW, starH).data;
-            const newTargets = [];
-            
-            for (let y = 0; y < starH; y += 2) {
-                for (let x = 0; x < starW; x += 2) {
-                    const alpha = data[(y * starW + x) * 4 + 3];
-                    if (alpha > 128) {
-                        newTargets.push({x: x, y: y});
-                    }
-                }
+    const offCanvas = document.createElement('canvas');
+    const offCtx = offCanvas.getContext('2d');
+    offCanvas.width = starW;
+    offCanvas.height = starH;
+    
+    offCtx.fillStyle = "white";
+    
+    // حساب حجم الخط بناءً على عرض الشاشة لضمان عدم خروج النص
+    // في الموبايل، سيكون الخط أصغر قليلاً ليأخذ مساحة مناسبة
+    let fontSize = Math.min(starW * 0.25, 80); 
+    offCtx.font = `900 ${fontSize}px Cairo`;
+    offCtx.textAlign = "center";
+    offCtx.textBaseline = "middle";
+    
+    // استخدام إزاحة نسبية لضمان التمركز دائماً
+    // الاسم في المنتصف مع إزاحة بسيطة لليمين، والقلب لليسار
+    offCtx.fillText("رباب", starW / 2 + (fontSize * 0.7), starH / 2);
+    offCtx.fillText("🩷", starW / 2 - (fontSize * 1.0), starH / 2);
+    
+    const data = offCtx.getImageData(0, 0, starW, starH).data;
+    const newTargets = [];
+    
+    // تقليل كثافة النقاط إذا كانت الشاشة صغيرة جداً لتحسين الأداء
+    const step = starW > 400 ? 2 : 3;
+    
+    for (let y = 0; y < starH; y += step) {
+        for (let x = 0; x < starW; x += step) {
+            const alpha = data[(y * starW + x) * 4 + 3];
+            if (alpha > 128) {
+                newTargets.push({x: x, y: y});
             }
-            return newTargets;
         }
+    }
+    return newTargets;
+}
 
         function animateStarsSky() {
             starCtx.clearRect(0, 0, starW, starH);

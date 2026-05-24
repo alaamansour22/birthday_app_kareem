@@ -318,7 +318,9 @@ html, body {
 
 .canvas-container {
     width: 100%;
-    height: 350px;
+    max-width: 100%; /* ضمان عدم الخروج عن الصندوق */
+    aspect-ratio: 1 / 1; /* يخلي المربع متناسق دائماً */
+    max-height: 300px;   /* تحديد أقصى ارتفاع للموبايل */
     border-radius: 15px;
     overflow: hidden;
     position: relative;
@@ -326,6 +328,7 @@ html, body {
     background: rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
     border: 1px solid rgba(255,255,255,0.1);
+    margin: 0 auto;
 }
 
 #starCanvas {
