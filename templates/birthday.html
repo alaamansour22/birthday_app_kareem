@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>كل سنة وأنتي طيبة يا روح قلبي 🩷</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +56,20 @@
             <p class="counter-footer">وكل ثانية بتعدي بحبك أكتر 🩷</p>
         </section>
 
-       <section class="gallery-section slide-up delay-2">
+        <section class="message-box jar-section slide-up delay-2">
+            <div class="box-icon">🎁</div>
+            <h2 class="section-title">صندوق الرسايل السري</h2>
+            <p id="jarProgress" style="color: #888; margin-bottom: 20px; font-size: 14px;">اضغطي على الهدية عشان تشوفي رسالة جديدة</p>
+            
+            <div class="jar-container" onclick="openJar()">
+                <div class="jar-icon" id="jarIcon">🎁</div>
+                <div class="jar-message-display" id="jarMessage">
+                    افتحي الهدية ✨
+                </div>
+            </div>
+        </section>
+
+        <section id="gallerySection" class="gallery-section slide-up delay-2">
             <h2 class="section-title">ذكرياتنا وأجمل أيامنا سـوا 📸</h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -88,11 +101,93 @@
 
     </div>
 
+    <div class="popup-overlay" id="messagePopup" onclick="closePopup()">
+        <div class="flying-card" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closePopup()">×</span>
+            <div class="card-icon">💌</div>
+            <p id="popupText"></p>
+            <button class="continue-btn" onclick="closePopup()">مكملين 🩷</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('birthdaySong').play().catch(e => console.log("Audio play prevented by browser, requires user interaction first."));
         });
+
+        // --- كود صندوق المفاجآت (الكارت الطائر) ---
+        const loveMessages = [ 
+            "صباح الخير يا عروسه ✨🩷",
+            "ربنا يخليكي ليا يا حبيبي ❤️✨",
+            "في حد قمر كده يترمي عليه ورد😂🩷🩷",
+            "عشان شايفني بعيونك الحلوين✨🩷🩷🩷",
+            "فلاحه حلوه وجميله😂🩷",
+            "حبيبي يا حاج🩷✨",
+            "ربنا يخليكي ليا يا مس ويديم وجودك في حياتي ويديم ضحكتك ويقدرني واسعدك يا حبيبي و اخليكي اسعد واحده في الدنيا 🌏♥️✨",
+            "بحبك يا مس✨🩷",
+            "كل سنه وانتي معايا يا مس ، وعقبال سنين العمر كله واحنا مع بعض يا حبيبي 🩷🩷✨",
+            "انتي هتكوني مراتي وقتها مش هيتكلم وحتي لو اتكلم احنا كده كده مروحين بيتنا يعني خليه يقول واحنا هنعمل الي احنا عاوزينه😂",
+            "وانت روحي الي من غيرها ماعرفش اعيش🩷🩷🩷",
+            "اشطر شطور بيسمع الكلام😂🩷🩷",
+            "اقسم بالله قمرررررر🌕😂♥️",
+            "تحفههه والله ، ايه الجمال ده ، مش عارف اطلع من الفديو والله 😂♥️♥️♥️♥️♥️",
+            "روحي وعمري كله♥️♥️♥️",
+            "وانا مش عاوز غيرك في الدنيا كلها ♥️♥️",
+            "وانتي عمري كلها الي مش هيكمل غير بوجود ي حبيبي ♥️♥️♥️🌍🦋",
+            "حلوه عشان دي اكتر صوره انتي معايا فيها ، دبلتك باينه ي روحي",
+            "ايه العيون القمر دي ي عم🌚🩷",
+            "تصدقي صوتك حلو 🌚♥️",
+            "انت عيوني الي بشوف بيها",
+            "علي فكره انا بحبك زي ما أنتي متحاوليش تبذلي أي مجهود يخليني انبهر بيكي أنا أصلا مبهور بيكي من يوم ما عرفتك♥️🫂",
+            "ربنا يخليك ليا ي حبيبي والله فرحت اوي م مصدق نفسي من الفرح حاسس اني بحلم والله ، ربنا يخليكي ليا ي روح قلبي ويجلعلك دايما مصدر سعادتي ♥️♥️♥️♥️"
+        ];
+
+        let currentMessageIndex = 0;
+
+        function openJar() {
+            // لو خلصت الرسايل، انقلها للصور مباشرة
+            if (currentMessageIndex >= loveMessages.length) {
+                document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            const jarIcon = document.getElementById('jarIcon');
+            // حركة الاهتزاز
+            jarIcon.classList.add('shake');
+            setTimeout(() => {
+                jarIcon.classList.remove('shake');
+            }, 500);
+
+            // إظهار الكارت الطائر
+            const popup = document.getElementById('messagePopup');
+            const popupText = document.getElementById('popupText');
+            
+            popupText.innerText = loveMessages[currentMessageIndex];
+            popup.classList.add('active');
+
+            currentMessageIndex++;
+
+            // تحديث العداد اللي تحت الصندوق
+            document.getElementById('jarProgress').innerText = `قرأتي ${currentMessageIndex} من ${loveMessages.length} رسائل`;
+
+            // لو دي كانت آخر رسالة، نغير التكست
+            if (currentMessageIndex >= loveMessages.length) {
+                document.getElementById('jarMessage').innerText = "دي كانت آخر رسالة 🩷 انزلي شوفي الصور";
+            }
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('messagePopup');
+            popup.classList.remove('active');
+
+            // التمرير التلقائي لألبوم الصور لو دي آخر رسالة
+            if (currentMessageIndex >= loveMessages.length) {
+                setTimeout(() => {
+                    document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' });
+                }, 400); // الانتظار حتى يختفي الكارت أولاً
+            }
+        }
 
         // --- كود العداد الزمني ---
         const startDate = new Date("2025-12-05T00:00:00").getTime();
@@ -144,7 +239,14 @@
         // الكونفيتي (الألعاب النارية)
         const canvas = document.getElementById('confettiCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth; 
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
         const confettis = [];
         const colors = ['#ff758c', '#ff7eb3', '#ffd700', '#6be5ff', '#b5f7a1'];
         for (let i = 0; i < 150; i++) {

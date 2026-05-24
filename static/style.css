@@ -8,11 +8,18 @@
     --card-bg: rgba(255, 255, 255, 0.92);
 }
 
-* {
+/* حل جذري لمشكلة السكرول العرضي (Horizontal Scroll) */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Cairo', sans-serif;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
 }
 
 /* =========================================
@@ -24,17 +31,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden; /* يمنع السكرول العرضي */
-    overflow-y: auto;   /* يسمح بالسكرول الطولي للموبايل */
+    overflow-y: auto;   
     position: relative;
-    margin: 0;
-    padding: 40px 20px; /* مساحة من فوق وتحت عشان التورتة والكارت */
+    padding: 40px 20px; 
 }
 
 .hearts-bg {
-    position: fixed; /* ضروري لتثبيت القلوب أثناء السكرول */
-    width: 100%;
-    height: 100%;
+    position: fixed; 
+    width: 100vw;
+    height: 100vh;
     top: 0;
     left: 0;
     pointer-events: none;
@@ -54,11 +59,11 @@
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
 
-/* حاوية صفحة الدخول (تجمع التورتة وكارت الدخول) */
+/* حاوية صفحة الدخول */
 .main-container-login {
     position: relative;
     z-index: 10;
-    width: 90%;
+    width: 100%;
     max-width: 450px;
     display: flex;
     flex-direction: column;
@@ -69,11 +74,11 @@
 .login-card {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px); /* لدعم متصفحات سفاري */
+    -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     padding: 40px 30px;
     border-radius: 24px;
-    width: 100%; /* يأخذ العرض الكامل للحاوية */
+    width: 100%;
     text-align: center;
     color: #fff;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -132,7 +137,7 @@
 .app-note.small { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-top: 20px; letter-spacing: 1px; }
 
 /* =========================================
-   2. تنسيقات التورتة (مشتركة بين الصفحتين)
+   2. تنسيقات التورتة 
    ========================================= */
 .hero-section {
     text-align: center;
@@ -152,54 +157,24 @@
     align-items: center;
 }
 
-.cake-layer {
-    width: 100%;
-    border-radius: 10px 10px 0 0;
-    position: relative;
-}
-
+.cake-layer { width: 100%; border-radius: 10px 10px 0 0; position: relative; }
 .layer-bottom { height: 45px; background: #6d4c41; width: 150px; }
 .layer-middle { height: 35px; background: #ffb74d; width: 125px; }
 .layer-top { height: 25px; background: #f8bbd0; width: 100px; }
 
 .cake-layer::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 8px;
-    background: #ff4766;
-    top: 6px;
-    left: 0;
-    border-radius: 20px;
-    opacity: 0.8;
+    content: ''; position: absolute; width: 100%; height: 8px; background: #ff4766; top: 6px; left: 0; border-radius: 20px; opacity: 0.8;
 }
 
 .candle {
-    width: 8px;
-    height: 30px;
-    background: linear-gradient(to right, #64b5f6, #e3f2fd);
-    border-radius: 3px 3px 0 0;
-    position: absolute;
-    top: -10px;
-    z-index: 2;
+    width: 8px; height: 30px; background: linear-gradient(to right, #64b5f6, #e3f2fd); border-radius: 3px 3px 0 0; position: absolute; top: -10px; z-index: 2;
 }
 
 .flame {
-    width: 10px;
-    height: 16px;
-    background: #ffb300;
-    border-radius: 50% 50% 20% 20%;
-    position: absolute;
-    top: -18px;
-    left: -1px;
-    animation: flicker 0.6s infinite alternate;
-    box-shadow: 0 0 10px #ffb300;
+    width: 10px; height: 16px; background: #ffb300; border-radius: 50% 50% 20% 20%; position: absolute; top: -18px; left: -1px; animation: flicker 0.6s infinite alternate; box-shadow: 0 0 10px #ffb300;
 }
 
-@keyframes flicker {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1) rotate(3deg); }
-}
+@keyframes flicker { 0% { transform: scale(1); } 100% { transform: scale(1.1) rotate(3deg); } }
 
 /* =========================================
    3. تنسيقات صفحة عيد الميلاد (birthday.html)
@@ -207,44 +182,21 @@
 .birthday-page {
     background: var(--bg-gradient);
     min-height: 100vh;
-    overflow-x: hidden;
     position: relative;
 }
 
 #confettiCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5;
 }
 
 /* حاوية صفحة عيد الميلاد */
 .main-container-birthday {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 40px; /* مسافة متساوية بين الأقسام */
+    width: 100%; max-width: 800px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; display: flex; flex-direction: column; gap: 40px; 
 }
 
 /* خلفية التورتات المتحركة */
 .background-cakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    list-style: none;
-    pointer-events: none;
-    overflow: hidden;
-    margin: 0;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; list-style: none; pointer-events: none; overflow: hidden;
 }
 .background-cakes li { position: absolute; display: block; font-size: 35px; opacity: 0.2; bottom: -150px; animation: riseBg 20s linear infinite; }
 .background-cakes li:nth-child(1) { left: 10%; font-size: 45px;}
@@ -261,16 +213,7 @@
 }
 
 .date-badge {
-    background: #fff;
-    color: var(--primary-dark);
-    font-weight: 900;
-    padding: 8px 25px;
-    border-radius: 50px;
-    display: inline-block;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    font-size: 16px;
-    margin-bottom: 20px;
-    border: 2px dashed var(--primary);
+    background: #fff; color: var(--primary-dark); font-weight: 900; padding: 8px 25px; border-radius: 50px; display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.08); font-size: 16px; margin-bottom: 20px; border: 2px dashed var(--primary);
 }
 
 .main-title { font-size: 28px; color: #4a1525; font-weight: 900; margin-bottom: 20px; }
@@ -279,93 +222,99 @@
 
 /* صناديق الرسائل */
 .message-box {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 40px 25px 30px; /* مسافة علوية أكبر عشان الأيقونة */
-    box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15);
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    text-align: center;
-    width: 100%;
+    background: var(--card-bg); border-radius: 24px; padding: 40px 25px 30px; box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15); position: relative; border: 1px solid rgba(255, 255, 255, 0.6); text-align: center; width: 100%;
 }
 
 .box-icon {
-    position: absolute;
-    top: -25px;
-    left: 50%;
-    transform: translateX(-50%); /* تمركز الأيقونة بدقة */
-    width: 50px;
-    height: 50px;
-    background: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
 .romantic-text {
-    font-size: 16px; /* تصغير الخط ليكون أكثر أناقة */
-    line-height: 1.8;
-    color: #4a212d;
-    text-align: justify;
-    font-weight: 600;
-    direction: rtl;
+    font-size: 16px; line-height: 1.8; color: #4a212d; text-align: justify; font-weight: 600; direction: rtl;
 }
 
 /* تنسيق العداد الزمني */
 .counter-section .section-title { font-size: 18px; color: var(--primary-dark); margin-bottom: 20px;}
-.counter-container { 
-    display: flex; 
-    justify-content: center; 
-    gap: 15px; 
-    flex-wrap: wrap; 
-}
+.counter-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
 .time-box {
-    background: rgba(255, 117, 140, 0.1);
-    border: 2px solid var(--primary);
-    border-radius: 15px;
-    padding: 15px 10px;
-    min-width: 70px;
-    flex: 1; /* لتوزيع العرض بالتساوي */
-    max-width: 100px;
+    background: rgba(255, 117, 140, 0.1); border: 2px solid var(--primary); border-radius: 15px; padding: 15px 10px; min-width: 70px; flex: 1; max-width: 100px;
 }
 .time-box span { font-size: 24px; font-weight: 900; color: var(--primary-dark); display: block; line-height: 1;}
 .time-box p { margin: 5px 0 0; font-size: 12px; font-weight: bold; color: #4a1525; }
 .counter-footer { margin-top: 20px; font-weight: bold; color: #c58600; font-size: 16px; }
 
+/* =========================================
+   تنسيقات صندوق المفاجآت (البرطمان)
+   ========================================= */
+.jar-container {
+    background: rgba(255, 117, 140, 0.05); border: 2px dashed var(--primary); border-radius: 20px; padding: 30px 20px; cursor: pointer; transition: all 0.3s ease; max-width: 100%; margin: 0 auto; position: relative; overflow: hidden;
+}
+.jar-container:hover {
+    background: rgba(255, 117, 140, 0.1); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 117, 140, 0.2);
+}
+.jar-icon { font-size: 60px; margin-bottom: 20px; transition: transform 0.3s ease; display: inline-block; }
+
+@keyframes shakeJar {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    50% { transform: rotate(15deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+}
+.jar-icon.shake { animation: shakeJar 0.5s ease; }
+
+.jar-message-display {
+    font-size: 18px; font-weight: bold; color: var(--primary-dark); min-height: 60px; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; padding: 0 10px; line-height: 1.6;
+}
+
+/* =========================================
+   نافذة الكارت الطائر (Popup Modal)
+   ========================================= */
+.popup-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+    z-index: 9999; display: flex; justify-content: center; align-items: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+}
+
+.popup-overlay.active { opacity: 1; pointer-events: auto; }
+
+.flying-card {
+    background: #fff; width: 90%; max-width: 350px; padding: 40px 20px 30px;
+    border-radius: 20px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    border: 4px solid var(--primary);
+    /* الكارت بيبدأ من تحت ومصغر وملفوف شوية */
+    transform: translateY(50vh) scale(0.5) rotate(-15deg);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+/* لما الكارت يتفتح بياخد حجمه الطبيعي في النص */
+.popup-overlay.active .flying-card { transform: translateY(0) scale(1) rotate(0deg); }
+
+.card-icon { font-size: 55px; margin-bottom: 15px; animation: floatUpDown 2s infinite ease-in-out; }
+@keyframes floatUpDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+.flying-card p { font-size: 20px; font-weight: bold; color: #4a1525; line-height: 1.8; margin-bottom: 25px; direction: rtl;}
+
+.close-btn { position: absolute; top: 5px; right: 15px; font-size: 30px; color: #bbb; cursor: pointer; transition: 0.2s; }
+.close-btn:hover { color: var(--primary-dark); }
+
+.continue-btn {
+    background: linear-gradient(90deg, var(--primary), #ff7eb3);
+    color: white; border: none; padding: 12px 30px; border-radius: 50px;
+    font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4); transition: transform 0.2s;
+}
+.continue-btn:hover { transform: scale(1.05); }
+
 /* ألبوم الصور (Cards Effect) */
-.gallery-section { text-align: center; width: 100%; }
+.gallery-section { text-align: center; width: 100%; scroll-margin-top: 50px; }
 .gallery-section .section-title { font-size: 22px; color: #4a1525; margin-bottom: 25px; font-weight: 700; }
 
-.swiper {
-    width: 100%;
-    max-width: 320px; /* تحديد أقصى عرض للسلايدر */
-    height: 420px; /* زيادة الارتفاع ليتناسب مع الصور الطولية */
-    padding: 20px 0 40px;
-}
-
-.swiper-slide {
-    border-radius: 18px;
-    border: 8px solid #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    background: #fff;
-    overflow: hidden;
-}
-
-/* ===== التعديل الجديد لمنع قص الصور ===== */
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* يعرض الصورة بالكامل بدون قص */
-    object-position: center; /* يضع الصورة في منتصف الكارت */
-    border-radius: 10px;
-    background-color: #fff; /* دمج أي مساحة فارغة مع الكارت الأبيض */
-}
-/* ======================================== */
-
+.swiper { width: 100%; max-width: 320px; height: 420px; padding: 20px 0 40px; }
+.swiper-slide { border-radius: 18px; border: 8px solid #fff; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); background: #fff; overflow: hidden; }
+.swiper-slide img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; border-radius: 10px; background-color: #fff; }
 .swiper-pagination-bullet-active { background: var(--primary-dark) !important; }
 
 /* تفاصيل الرسالة الأخيرة */
@@ -392,7 +341,6 @@
 /* =========================================
    5. الاستجابة للشاشات (Media Queries)
    ========================================= */
-/* للهواتف الصغيرة جداً (أقل من 360px) */
 @media (max-width: 360px) {
     .main-title { font-size: 24px; }
     .swiper { max-width: 260px; height: 350px; }
@@ -401,7 +349,6 @@
     .super-bold { font-size: 26px; }
 }
 
-/* للشاشات المتوسطة والكبيرة (التابلت والكمبيوتر) */
 @media (min-width: 768px) {
     .main-container-birthday { padding: 60px 20px; }
     .message-box { padding: 50px 40px 40px; }
