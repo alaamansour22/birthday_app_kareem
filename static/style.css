@@ -1,7 +1,7 @@
 /* =========================================
    متغيرات الألوان والتنسيقات العامة
    ========================================= */
-   :root {
+:root {
     --primary: #ff758c;
     --primary-dark: #ff4766;
     --bg-gradient: linear-gradient(135deg, #ffe4e8 0%, #ffcbd5 100%);
@@ -24,18 +24,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden; /* يمنع السكرول العرضي */
+    overflow-y: auto;   /* يسمح بالسكرول الطولي للموبايل */
     position: relative;
+    margin: 0;
+    padding: 40px 20px; /* مساحة من فوق وتحت عشان التورتة والكارت */
 }
 
 .hearts-bg {
-    position: absolute;
+    position: fixed; /* ضروري لتثبيت القلوب أثناء السكرول */
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: 1;
+    overflow: hidden;
 }
 
 .floating-heart {
