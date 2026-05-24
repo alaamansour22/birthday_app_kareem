@@ -354,12 +354,18 @@
     overflow: hidden;
 }
 
+/* ===== التعديل الجديد لمنع قص الصور ===== */
 .swiper-slide img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* يعرض الصورة بالكامل بدون قص */
+    object-position: center; /* يضع الصورة في منتصف الكارت */
     border-radius: 10px;
+    background-color: #fff; /* دمج أي مساحة فارغة مع الكارت الأبيض */
 }
+/* ======================================== */
+
 .swiper-pagination-bullet-active { background: var(--primary-dark) !important; }
 
 /* تفاصيل الرسالة الأخيرة */
